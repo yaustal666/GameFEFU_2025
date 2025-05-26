@@ -3,12 +3,10 @@ using System.Collections.Generic;
 
 public class StateMachine {
 
-    private State CurrentState {  get; set; }
+    public State CurrentState { get; private set; }
     private Dictionary<Type, State> _states = new Dictionary<Type, State>();
 
-
-    public void Initialize() {
-
+    public void Initialize(State state) {
     }
 
     public void AddState(State state) {
@@ -18,7 +16,7 @@ public class StateMachine {
     public void ChangeState<T>() where T : State {
         var type = typeof(T);
 
-        if (CurrentState.GetType() == type) {
+        if (CurrentState != null && CurrentState.GetType() == type) {
             return;
         }
 

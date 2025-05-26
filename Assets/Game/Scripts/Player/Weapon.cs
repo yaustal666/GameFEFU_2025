@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour {
 
     [SerializeField] private bool isAttackExit = false;
     [SerializeField] private bool isIdle = true;
+    public bool IsIdle => isIdle;
 
     [SerializeField] private List<AttackData> _combo;
 
