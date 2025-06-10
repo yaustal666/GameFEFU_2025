@@ -1,0 +1,6 @@
+@startuml EnemyFSM
+
+metaclass EnemyStateMachine {
+}
+
+@enduml

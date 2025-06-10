@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour, IMovableBody
+public class Player : MonoBehaviour, IMovableBody, IDamagable
 {
     public Rigidbody2D _rb;
+    private float _hp = 100f;
 
     public Vector2 _moveDirection;
     public float _moveSpeed = 5f;
@@ -25,5 +26,15 @@ public class Player : MonoBehaviour, IMovableBody
 
     private void Awake() {
         _rb = GetComponent<Rigidbody2D>();
+    }
+
+    public void TakeDamage(float damage) {
+
+
+        Debug.Log("Taken damage");
+        _hp -= damage;
+        if (_hp <= 0) {
+            Destroy(gameObject);
+        }
     }
 }

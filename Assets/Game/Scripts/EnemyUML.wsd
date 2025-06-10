@@ -1,0 +1,86 @@
+' metaclass = MonoBehaviour
+@startuml Enemy
+
+abstract class State {
+    +virtual void Enter()
+    +virtual void Update()
+    +virtual void Exit()
+}
+
+class StateMachine {
+    +State CurrentState
+    -Dictionary<State> _states
+
+    +AddState(State)
+    +ChangeState(State)
+    +Update()
+}
+
+metaclass EnemyStateMachine {
+
+}
+
+class EnemyIdleState {
+
+}
+
+class EnemyChaseState {
+
+}
+
+class EnemyAttackState {
+
+}
+
+metaclass Hitbox {
+    -bool isAttack
+    +IDamagable _owner
+    -Collider2D _collider
+    +event Action<IDamagable> HitboxCollided
+    -OnTriggerEnter2D()
+    +SetActive()
+}
+
+metaclass Detector {
+    -Collider2D _collider
+    +event Action<Transform> Detected
+    -OnTriggerEnter2D()
+    +SetActive()
+}
+
+metaclass Health {
+
+}
+
+abstract class Enemy {
+    -Hitbox _hitbox
+    -Detector _playerDetector
+    -Detector _attackRangeDetector
+    -OnHit(IDamagable)
+    -OnPlayerDetected(Transform)
+    -OnEnterAttackRange()
+}
+
+interface IHealth {
+    TakeDamage()
+    Heal()
+}
+
+interface IDamagable {
+    TakeDamage()
+}
+
+Health <|.. IHealth
+Health <|.. IDamagable
+Enemy --> Hitbox
+Enemy --> Detector
+Enemy +-- Health
+Enemy --> EnemyStateMachine
+EnemyStateMachine --> StateMachine
+StateMachine --> EnemyIdleState
+StateMachine --> EnemyChaseState
+StateMachine --> EnemyAttackState
+EnemyIdleState <|-- State
+EnemyChaseState <|-- State
+EnemyAttackState <|-- State
+@enduml
