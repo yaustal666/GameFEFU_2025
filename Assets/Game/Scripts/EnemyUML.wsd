@@ -1,86 +1,60 @@
 ' metaclass = MonoBehaviour
 @startuml Enemy
 
-abstract class State {
-    +virtual void Enter()
-    +virtual void Update()
-    +virtual void Exit()
+enum StateType {
+    Idle
+    Wander
+    Patrol
+    Attack
+    Chase
 }
+
+interface IStateData {
+    +Transform transform
+    +Target Target
+    +RigidBody2D RB
+    +Vector2 MoveDirection
+    +float Speed
+    +Animator Animator
+}
+
+abstract class State <<Serializable>>{
+    +StateType _type
+    -IStateData _stateSata
+    +abstract Initialize(IStateData)
+    +virtual Enter() 
+    +virtual Update() 
+    +virtual PhysicsUpdate() 
+    +virtual Exit() 
+}
+State --> StateType
 
 class StateMachine {
     +State CurrentState
-    -Dictionary<State> _states
-
-    +AddState(State)
-    +ChangeState(State)
-    +Update()
+    -Dictionary<StateType, State> _states
+    +void AddState(StateType)
+    +void ChangeState(StateType)
+    +void Update()
+    +void PhysicsUpdate()
 }
+StateMachine ..> SomeState1
+StateMachine ..> SomeState2
 
-metaclass EnemyStateMachine {
-
+class SomeState1 <<Serializable>> {
+    <<SerializedField>> ConfigurableData 
 }
+SomeState1 <|.. State
 
-class EnemyIdleState {
-
+class SomeState2 <<Serializable>> {
+    <<SerializedField>> ConfigurableData 
 }
+SomeState2 <|.. State
 
-class EnemyChaseState {
-
-}
-
-class EnemyAttackState {
-
-}
-
-metaclass Hitbox {
-    -bool isAttack
-    +IDamagable _owner
-    -Collider2D _collider
-    +event Action<IDamagable> HitboxCollided
-    -OnTriggerEnter2D()
-    +SetActive()
-}
-
-metaclass Detector {
-    -Collider2D _collider
-    +event Action<Transform> Detected
-    -OnTriggerEnter2D()
-    +SetActive()
-}
-
-metaclass Health {
+class SomeEnemy {
 
 }
+note right of SomeEnemy : Enemy logic and call switch states
+SomeEnemy --> StateMachine
+SomeEnemy <|.. IStateData
 
-abstract class Enemy {
-    -Hitbox _hitbox
-    -Detector _playerDetector
-    -Detector _attackRangeDetector
-    -OnHit(IDamagable)
-    -OnPlayerDetected(Transform)
-    -OnEnterAttackRange()
-}
-
-interface IHealth {
-    TakeDamage()
-    Heal()
-}
-
-interface IDamagable {
-    TakeDamage()
-}
-
-Health <|.. IHealth
-Health <|.. IDamagable
-Enemy --> Hitbox
-Enemy --> Detector
-Enemy +-- Health
-Enemy --> EnemyStateMachine
-EnemyStateMachine --> StateMachine
-StateMachine --> EnemyIdleState
-StateMachine --> EnemyChaseState
-StateMachine --> EnemyAttackState
-EnemyIdleState <|-- State
-EnemyChaseState <|-- State
-EnemyAttackState <|-- State
 @enduml

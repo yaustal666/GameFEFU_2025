@@ -1,26 +1,34 @@
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class StateMachine {
+public class StateMachine : MonoBehaviour {
+
+    [SerializeReference] private List<State> _states;
+
+    private IStateData _stateData;
+    private Dictionary<StateType, State> _statesMap = new Dictionary<StateType, State>();
 
     public State CurrentState { get; private set; }
-    private Dictionary<Type, State> _states = new Dictionary<Type, State>();
 
-    public void Initialize(State state) {
+    private void Start() {
+        _stateData = GetComponent<IStateData>();
+
+        foreach (var state in _states) {
+            state.Initialize(_stateData);
+            AddState(state);
+        }
     }
 
     public void AddState(State state) {
-        _states.Add(state.GetType(), state);
+        _statesMap.Add(state._type, state);
     }
 
-    public void ChangeState<T>() where T : State {
-        var type = typeof(T);
-
-        if (CurrentState != null && CurrentState.GetType() == type) {
+    public void ChangeState(StateType type) {
+        if (CurrentState != null && CurrentState._type == type) {
             return;
         }
 
-        if (_states.TryGetValue(type, out var newState)) {
+        if (_statesMap.TryGetValue(type, out var newState)) {
             CurrentState?.Exit();
             CurrentState = newState;
             CurrentState.Enter();
