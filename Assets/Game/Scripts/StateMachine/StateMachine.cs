@@ -39,7 +39,7 @@ public class StateMachine : MonoBehaviour {
         CurrentState?.Update();
     }
 
-    public void PhysicsUpdate() {
+    public void FixedUpdate() {
         CurrentState?.PhysicsUpdate();
     }
 }

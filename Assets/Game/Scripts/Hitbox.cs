@@ -11,6 +11,7 @@ public class Hitbox : MonoBehaviour
     private void Awake()
     {
         _collider = GetComponent<Collider2D>();
+        _owner = GetComponentInParent<IDamagable>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -23,7 +24,6 @@ public class Hitbox : MonoBehaviour
             }
 
         }
-
     }
 
     public void SetActive(bool isActive)

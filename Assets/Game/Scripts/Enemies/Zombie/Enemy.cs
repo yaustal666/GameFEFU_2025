@@ -10,12 +10,15 @@ public class Enemy : MonoBehaviour, IStateData {
     protected Vector2 _moveDirection;
     [SerializeField] protected float _speed = 3f;
 
-    public Rigidbody2D RB => _rb;
     public Transform Target => _target;
     public Transform Transform => transform;
     public Animator Animator => _animator;
-    public Vector2 MoveDirection { get => _moveDirection; set => _moveDirection = value; }
-    public float Speed => _speed;
+
+    public virtual void Move(Vector2 moveDirection) {
+    }
+
+    public virtual void Stop() {
+    }
 
     private void Awake() {
         _rb = GetComponent<Rigidbody2D>();

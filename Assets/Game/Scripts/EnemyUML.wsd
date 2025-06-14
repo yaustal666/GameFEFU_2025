@@ -41,20 +41,26 @@ StateMachine ..> SomeState1
 StateMachine ..> SomeState2
 
 class SomeState1 <<Serializable>> {
-    <<SerializedField>> ConfigurableData 
+    -IStateData
 }
 SomeState1 <|.. State
 
 class SomeState2 <<Serializable>> {
-    <<SerializedField>> ConfigurableData 
+    -IStateData
 }
 SomeState2 <|.. State
 
-class SomeEnemy {
+class SomeEnemy1 {
 
 }
-note right of SomeEnemy : Enemy logic and call switch states
-SomeEnemy --> StateMachine
-SomeEnemy <|.. IStateData
+SomeEnemy1 --> StateMachine
+SomeEnemy1 <|.. IStateData
+
+class SomeEnemy2 {
+
+}
+note top of SomeEnemy2 : Enemy logic and call switch states
+SomeEnemy2 --> StateMachine
+SomeEnemy2 <|.. IStateData
 
 @enduml

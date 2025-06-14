@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
         var enemy = collision.gameObject.GetComponent<IDamagable>();
         if (enemy != null) {
-            enemy.TakeDamage(_combo[_currentAttack].damage);
+            //enemy.TakeDamage(_combo[_currentAttack].damage);
         }
     }
 

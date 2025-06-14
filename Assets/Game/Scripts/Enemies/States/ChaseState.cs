@@ -21,25 +21,18 @@ public class ChaseState : State {
         Vector2 targetPosition = _stateData.Target.position;
 
         if (Vector2.Distance(currentPosition, targetPosition) < _reachedThreshold) {
-            Stop();
+            _stateData.Stop();
             return;
         }
 
-        _stateData.MoveDirection = (targetPosition - currentPosition).normalized;
+        Vector2 moveDirection = (targetPosition - currentPosition).normalized;
 
-        _stateData.RB.linearVelocity = _stateData.MoveDirection * _stateData.Speed;
-
+        _stateData.Move(moveDirection);
 
     }
 
     public override void Exit() {
-        _stateData.RB.linearVelocity = Vector2.zero;
-        _stateData.MoveDirection = Vector2.zero;
-    }
-
-    private void Stop() {
-        _stateData.RB.linearVelocity = Vector2.zero;
-        _stateData.MoveDirection = Vector2.zero;
+        _stateData.Stop();
     }
 
 }

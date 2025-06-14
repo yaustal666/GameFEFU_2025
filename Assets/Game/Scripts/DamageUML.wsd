@@ -1,0 +1,38 @@
+@startuml Damage
+
+interface IDamagable
+Player <|.. IDamagable
+Enemy <|.. IDamagable
+
+class Player {
+
+}
+
+class Health1 {
+
+}
+
+class Health2 {
+
+}
+
+interface IHealth
+
+class Enemy {
+
+}
+
+class Hitbox
+
+
+
+Player --> Hitbox
+Enemy --> Hitbox
+
+Health1 <|.. IHealth
+Health2 <|.. IHealth
+
+Player --> Health1
+Enemy --> Health2
+
+@enduml

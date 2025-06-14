@@ -22,7 +22,7 @@ public class WanderState : State {
         PickNewTargetPosition();
     }
     
-    public override void Update() {
+    public override void PhysicsUpdate() {
         if (Time.time - _waitStartTime > _waitTime) {
             isWaiting = false;
         }
@@ -32,9 +32,9 @@ public class WanderState : State {
         }
 
         Vector2 currentPosition = _stateData.Transform.position;
-        _stateData.MoveDirection = (_targetPosition - currentPosition).normalized;
+        var moveDirection = (_targetPosition - currentPosition).normalized;
 
-        _stateData.RB.linearVelocity = _stateData.MoveDirection * _stateData.Speed;
+        _stateData.Move(moveDirection);
 
         if (Vector2.Distance(currentPosition, _targetPosition) < _reachedThreshold) {
             Stop();
@@ -56,7 +56,6 @@ public class WanderState : State {
 
     private void Stop() {
         _stateData.Animator.SetTrigger("idle");
-        _stateData.RB.linearVelocity = Vector2.zero;
-        _stateData.MoveDirection = Vector2.zero;
+        _stateData.Stop();
     }
 }
