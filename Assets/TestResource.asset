@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26e4ec1ccddfe745b8affda18555304, type: 3}
+  m_Name: TestResource
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  _itemId: bird
+  _itemHashId: 1
+  _icon: {fileID: -623676149, guid: 56c2ec3074b42e144a0cab83ade65363, type: 3}
+  _itemType: 2
